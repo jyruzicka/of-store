@@ -1,6 +1,6 @@
 # of-store
 
-## Store you OmniFocus projects as SQLite
+## Store your OmniFocus projects as SQLite
 
 of-store is a tiny little binary to export data from your OmniFocus setup for use in other applications. It's particularly handy if you want to track what you've completed in the last week, or month, or year - the longer it runs for, the more data it'll collect.
 
