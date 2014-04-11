@@ -8,11 +8,23 @@
 
 #import "JRLog.h"
 
+static NSString *binPath;
+
 @implementation JRLog
+
++(NSString*)binPath {
+    if (binPath == NULL)
+        binPath = [@"~/bin/nlog" stringByExpandingTildeInPath];
+    return binPath;
+}
+
++(BOOL)isInstalled {
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self binPath]];
+}
 
 +(void)log:(NSString *)message {
     NSTask *notify = [[NSTask alloc] init];
-    notify.launchPath = @"~/bin/nlog";
+    notify.launchPath = [self binPath];
     notify.arguments = @[@"add", @"--owner=of-store",message];
     [notify launch];
 }

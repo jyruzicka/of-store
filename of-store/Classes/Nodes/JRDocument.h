@@ -21,9 +21,5 @@
 -(id)initWithDocument:(OmniFocusDocument *)document;
 +(id)documentWithDocument:(OmniFocusDocument *)document;
 
-#pragma mark Properties
-//-(NSArray *)folders;
-//-(NSArray *)projects;
-
 
 @end

@@ -10,6 +10,7 @@
 
 @interface JRLog : NSObject
 
++(BOOL)isInstalled;
 +(void)log:(NSString *)message;
 
 @end

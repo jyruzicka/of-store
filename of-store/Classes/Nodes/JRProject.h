@@ -11,7 +11,6 @@
 
 @interface JRProject : JROFObject {
     NSString *_name, *_ofid;
-//    NSArray *_tasks;
     NSDate *_creationDate, *_completionDate;
     BOOL _completed;
 }
@@ -24,7 +23,6 @@
 +(id)projectWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent;
 
 #pragma mark Properties
-//-(NSArray *)tasks;
 -(NSDate *)creationDate;
 -(NSDate *)completionDate;
 -(BOOL)completed;

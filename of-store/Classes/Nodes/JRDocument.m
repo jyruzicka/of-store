@@ -8,6 +8,7 @@
 
 #import "JRDocument.h"
 #import "OmniFocus.h"
+
 //Children
 #import "JRFolder.h"
 #import "JRProject.h"
@@ -19,7 +20,6 @@
 @implementation JRDocument
 
 #pragma mark Initializer
-
 -(id)initWithDocument:(OmniFocusDocument *)document {
     if (self = [super initWithParent:nil]) {
         self.document = document;
@@ -33,20 +33,6 @@
 +(id)documentWithDocument:(OmniFocusDocument *)document {
     return [[self alloc] initWithDocument:document];
 }
-
-#pragma mark Properties
-
-//-(NSArray *)folders {
-//    if (!_folders)
-//        _folders = [self.document folders];
-//    return _folders;
-//}
-//
-//-(NSArray *)projects {
-//    if (!_projects)
-//        _projects = [self.document projects];
-//    return _projects;
-//}
 
 #pragma mark Inherited
 

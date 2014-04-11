@@ -14,8 +14,6 @@
 //JROFObject classes
 #import "JROFObject.h"
 #import "JRDocument.h"
-#import "JRProject.h"
-#import "JRTask.h"
 
 
 int main(int argc, const char * argv[])
@@ -39,20 +37,24 @@ int main(int argc, const char * argv[])
                 if (err) NSLog(@"Error: %@", err.description);
             }
         }];
-        NSString *projString;
-        NSString *taskString;
-        if (JRDatabase.projectsRecorded == 1)
-            projString = @"1 project";
-        else
-            projString = [NSString stringWithFormat:@"%lu projects", JRDatabase.projectsRecorded];
         
-        if (JRDatabase.tasksRecorded == 1)
-            taskString = @"1 task";
-        else
-            taskString = [NSString stringWithFormat:@"%lu tasks", JRDatabase.tasksRecorded];
+        if ([JRLog isInstalled]) {
+            NSString *projString;
+            NSString *taskString;
+            if (JRDatabase.projectsRecorded == 1)
+                projString = @"1 project";
+            else
+                projString = [NSString stringWithFormat:@"%lu projects", JRDatabase.projectsRecorded];
+            
+            if (JRDatabase.tasksRecorded == 1)
+                taskString = @"1 task";
+            else
+                taskString = [NSString stringWithFormat:@"%lu tasks", JRDatabase.tasksRecorded];
         
-        NSString *output = [NSString stringWithFormat:@"%@ and %@ recorded.", projString, taskString];
-        [JRLog log:output];
+            NSString *output = [NSString stringWithFormat:@"%@ and %@ recorded.", projString, taskString];
+            [JRLog log:output];
+        }
+
     }
     return 0;
 }

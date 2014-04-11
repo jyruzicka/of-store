@@ -8,6 +8,7 @@
 
 #import "JRFolder.h"
 #import "OmniFocus.h"
+
 //Children
 #import "JRProject.h"
 
@@ -32,19 +33,6 @@ static NSArray *kJRForbiddenNames;
 +(id)folderWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent {
     return [[self alloc] initWithFolder:folder parent:parent];
 }
-
-#pragma mark Properties
-//-(NSArray *)folders {
-//    if (!_folders)
-//        _folders = self.folder.folders;
-//    return _folders;
-//}
-//
-//-(NSArray *)projects {
-//    if (!_projects)
-//        _projects = self.folder.projects;
-//    return _projects;
-//}
 
 #pragma mark Inherited
 -(NSString *)name {

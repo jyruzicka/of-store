@@ -30,19 +30,6 @@
     return [[self alloc] initWithProject:project parent:parent];
 }
 
-#pragma mark Properties
-//-(NSArray *)tasks {
-//    if (!_tasks) { //TODO try simplifying
-//        NSArray *fTasks = self.project.rootTask.flattenedTasks;
-//        NSMutableArray *runningArr = [NSMutableArray arrayWithCapacity:[fTasks count]];
-//        for (OmniFocusFlattenedTask *ft in fTasks)
-//            [runningArr addObject:(OmniFocusTask *)ft];
-//        _tasks = [NSArray arrayWithArray:runningArr];
-//    }
-//    
-//    return _tasks;
-//}
-
 -(NSDate *)creationDate {
     if (!_creationDate)
         _creationDate = self.project.creationDate;
