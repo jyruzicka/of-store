@@ -20,9 +20,21 @@ int main(int argc, const char * argv[])
 {
 
     @autoreleasepool {
+        //Uncomment correct string
+        //NSString *ofs = @"com.omnigroup.omnifocus";
+        NSString *ofs = @"com.omnigroup.OmniFocus2";
         // Fetch OmniFocus stuff
-        OmniFocusApplication *of = [SBApplication applicationWithBundleIdentifier:@"com.omnigroup.omnifocus"];
-        if (![of isRunning]) return 0;
+        OmniFocusApplication *of = [SBApplication applicationWithBundleIdentifier:ofs];
+        
+        NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
+        BOOL ofRunning = NO;
+        for (NSRunningApplication *app in apps)
+            if ([app.bundleIdentifier isEqualToString:ofs]) {
+                ofRunning = YES;
+                break;
+            }
+        
+        if (!ofRunning) return 0;
         
         // Ensure database is up and running
         [JRDatabase load];
