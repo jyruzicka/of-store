@@ -20,9 +20,7 @@ int main(int argc, const char * argv[])
 {
 
     @autoreleasepool {
-        //Uncomment correct string
-        //NSString *ofs = @"com.omnigroup.omnifocus";
-        NSString *ofs = @"com.omnigroup.OmniFocus2";
+        NSString *ofs = @"com.omnigroup.omnifocus";
         // Fetch OmniFocus stuff
         OmniFocusApplication *of = [SBApplication applicationWithBundleIdentifier:ofs];
         
