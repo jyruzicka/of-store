@@ -18,7 +18,6 @@
 #import <FMDB/FMDatabaseAdditions.h>
 
 //Constants
-static FMDatabase *kJRDatabase;
 static NSString *kJRProjectsUpdate = @"UPDATE projects SET name=?,ancestors=?,completionDate=?,creationDate=? WHERE ofid=?;";
 static NSString *kJRProjectsInsert = @"INSERT INTO projects (name,ancestors,completionDate,creationDate,ofid) VALUES (?,?,?,?,?);";
 
@@ -30,24 +29,51 @@ NSUInteger kJRTasksRecorded = 0;
 
 @implementation JRDatabase
 
-// Checks to make sure the database is there and so on
-+(void)load {
-    if (!kJRDatabase) {
+-(id)initWithLocation:(NSString *)location {
+    if (self = [super init]) {
+        self.location = location;
+    }
+    return self;
+}
+
++(id)databaseWithLocation:(NSString *)location {
+    return [[self alloc] initWithLocation:location];
+}
+
+-(BOOL)databaseIsLegal {
+    NSFileManager *fm = [NSFileManager defaultManager];
+
+    NSString *kanbanPath = [self.location stringByStandardizingPath];
+    
+    //Check dir exists
+    NSArray *dirComponents = [kanbanPath pathComponents];
+    NSIndexSet *dirSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, dirComponents.count-1)];
+    NSString *dir = [[dirComponents objectsAtIndexes:dirSet] componentsJoinedByString:@"/"];
+    
+    if ([dir isEqualToString:@""]) //current dir
+        return YES;
+    
+    BOOL isDir;
+    BOOL fileExists = [fm fileExistsAtPath:dir isDirectory:&isDir];
+    return (fileExists && isDir);
+}
+
+//Database fetcher
+-(FMDatabase *)database {
+    if (!_database) {
         NSFileManager *fm = [NSFileManager defaultManager];
-        NSString *kanbanPath = [@"~/.kb" stringByExpandingTildeInPath];
-        [fm createDirectoryAtPath:kanbanPath withIntermediateDirectories:NO attributes:nil error:nil];
-        [fm changeCurrentDirectoryPath:kanbanPath];
-        BOOL newDB = (![fm fileExistsAtPath:@"of-store.db"]);
+        NSString *kanbanPath = [self.location stringByStandardizingPath];
         
-        kJRDatabase = [FMDatabase databaseWithPath:@"of-store.db"];
-        [kJRDatabase open];
-        
+        BOOL newDB = (![fm fileExistsAtPath:kanbanPath]);
+        _database = [FMDatabase databaseWithPath:kanbanPath];
+        [_database open];
         if (newDB) [self populateDatabase];
     }
+    return _database;
 }
 
 #pragma mark - Database methods
-+(NSError *)saveOFObject:(JROFObject *)o {
+-(NSError *)saveOFObject:(JROFObject *)o {
     if ([o isKindOfClass:[JRTask class]])
         return [self saveTask:(JRTask *)o];
     else if ([o isKindOfClass:[JRProject class]])
@@ -62,8 +88,8 @@ NSUInteger kJRTasksRecorded = 0;
     }
 }
 
-+(NSError *)saveTask:(JRTask *)t {
-    NSUInteger count = [kJRDatabase intForQuery:@"SELECT COUNT(*) FROM tasks WHERE ofid=?",t.ofid];
+-(NSError *)saveTask:(JRTask *)t {
+    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM tasks WHERE ofid=?",t.ofid];
     NSString *query;
     if (count > 0) // UPDATE required
         query = kJRTasksUpdate;
@@ -79,16 +105,16 @@ NSUInteger kJRTasksRecorded = 0;
                      t.creationDate,
                      t.ofid];
     
-    if (![kJRDatabase executeUpdate:query withArgumentsInArray:args])
-        return [kJRDatabase lastError];
+    if (![self.database executeUpdate:query withArgumentsInArray:args])
+        return [self.database lastError];
     else {
         kJRTasksRecorded++;
         return nil;
     }
 }
 
-+(NSError *)saveProject:(JRProject *)p {
-    NSUInteger count = [kJRDatabase intForQuery:@"SELECT COUNT(*) FROM projects WHERE ofid=?",p.ofid];
+-(NSError *)saveProject:(JRProject *)p {
+    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM projects WHERE ofid=?",p.ofid];
     NSString *query;
     if (count > 0) // UPDATE required
         query = kJRProjectsUpdate;
@@ -102,8 +128,8 @@ NSUInteger kJRTasksRecorded = 0;
                       p.creationDate,
                       p.ofid];
     
-    if (![kJRDatabase executeUpdate:query withArgumentsInArray:args])
-        return [kJRDatabase lastError];
+    if (![self.database executeUpdate:query withArgumentsInArray:args])
+        return [self.database lastError];
     else {
         kJRProjectsRecorded++;
         return nil;
@@ -111,16 +137,16 @@ NSUInteger kJRTasksRecorded = 0;
 }
 
 #pragma mark Records
-+(NSUInteger)projectsRecorded {return kJRProjectsRecorded; }
-+(NSUInteger)tasksRecorded {return kJRTasksRecorded; }
+-(NSUInteger)projectsRecorded {return kJRProjectsRecorded; }
+-(NSUInteger)tasksRecorded {return kJRTasksRecorded; }
 
 
 #pragma mark - Private methods
-+(void)populateDatabase {
+-(void)populateDatabase {
     //Tasks
-    [kJRDatabase update:@"CREATE TABLE tasks (id INTEGER PRIMARY KEY, name STRING, ofid STRING, projectID STRING, projectName STRING, ancestors STRING, creationDate DATE, completionDate DATE);" withErrorAndBindings:nil];
+    [self.database update:@"CREATE TABLE tasks (id INTEGER PRIMARY KEY, name STRING, ofid STRING, projectID STRING, projectName STRING, ancestors STRING, creationDate DATE, completionDate DATE);" withErrorAndBindings:nil];
     //Projects
-    [kJRDatabase update:@"CREATE TABLE projects (id INTEGER PRIMARY KEY, name STRING, ofid STRING, ancestors STRING, creationDate DATE, completionDate DATE);" withErrorAndBindings:nil];
+    [self.database update:@"CREATE TABLE projects (id INTEGER PRIMARY KEY, name STRING, ofid STRING, ancestors STRING, creationDate DATE, completionDate DATE);" withErrorAndBindings:nil];
 }
 
 @end
