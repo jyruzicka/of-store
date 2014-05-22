@@ -17,7 +17,6 @@
 		3D759FF0184B14FD008519BD /* of_store.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D759FEF184B14FD008519BD /* of_store.1 */; };
 		3D759FF8184B16C6008519BD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D759FF7184B16C6008519BD /* ScriptingBridge.framework */; };
 		3DACD52C184D1A25000D10F7 /* JRDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DACD52B184D1A25000D10F7 /* JRDatabase.m */; };
-		3DF862261874C15C00EDB8C1 /* JRLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF862251874C15C00EDB8C1 /* JRLog.m */; };
 		858299079ED54D678F5E472A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A4B2FDF6A14AA2A62F5E26 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +54,6 @@
 		3D759FF7184B16C6008519BD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		3DACD52A184D1A25000D10F7 /* JRDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDatabase.h; sourceTree = "<group>"; };
 		3DACD52B184D1A25000D10F7 /* JRDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDatabase.m; sourceTree = "<group>"; };
-		3DF862241874C15C00EDB8C1 /* JRLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRLog.h; sourceTree = "<group>"; };
-		3DF862251874C15C00EDB8C1 /* JRLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLog.m; sourceTree = "<group>"; };
 		70A4B2FDF6A14AA2A62F5E26 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -145,8 +142,6 @@
 				3D152BFF1896DD3500E9161D /* Nodes */,
 				3DACD52A184D1A25000D10F7 /* JRDatabase.h */,
 				3DACD52B184D1A25000D10F7 /* JRDatabase.m */,
-				3DF862241874C15C00EDB8C1 /* JRLog.h */,
-				3DF862251874C15C00EDB8C1 /* JRLog.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -237,7 +232,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DF862261874C15C00EDB8C1 /* JRLog.m in Sources */,
 				3D759FEC184B14FD008519BD /* main.m in Sources */,
 				3D152C0E1896F22600E9161D /* JRTask.m in Sources */,
 				3DACD52C184D1A25000D10F7 /* JRDatabase.m in Sources */,

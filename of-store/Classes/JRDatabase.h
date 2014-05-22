@@ -7,18 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
-@class JROFObject;
-@class JRProject;
-@class JRTask;
+@class JROFObject,  JRProject, JRTask;
+@class FMDatabase;
 
-@interface JRDatabase : NSObject
 
-+(void)load;
+@interface JRDatabase : NSObject {
+    FMDatabase *_database;
+}
 
-+(NSError *)saveOFObject:(JROFObject *)o;
-+(NSError *)saveTask:(JRTask *)t;
-+(NSError *)saveProject:(JRProject *)p;
+@property NSString *location;
 
-+(NSUInteger)projectsRecorded;
-+(NSUInteger)tasksRecorded;
+-(id)initWithLocation:(NSString *)location;
++(id)databaseWithLocation:(NSString *)location;
+
+-(BOOL)databaseIsLegal;
+
+-(FMDatabase *)database;
+
+
+-(NSError *)saveOFObject:(JROFObject *)o;
+-(NSError *)saveTask:(JRTask *)t;
+-(NSError *)saveProject:(JRProject *)p;
+
+-(NSUInteger)projectsRecorded;
+-(NSUInteger)tasksRecorded;
 @end
