@@ -10,7 +10,7 @@
 @class OmniFocusProject;
 
 @interface JRProject : JROFObject {
-    NSString *_name, *_ofid;
+    NSString *_name, *_id;
     NSDate *_creationDate, *_completionDate;
     BOOL _completed;
 }

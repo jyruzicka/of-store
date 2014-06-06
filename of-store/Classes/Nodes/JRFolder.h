@@ -10,7 +10,7 @@
 @class OmniFocusFolder;
 
 @interface JRFolder : JROFObject {
-    NSString *_name, *_ofid;
+    NSString *_name, *_id;
 }
 
 @property (atomic,readonly) OmniFocusFolder *folder;

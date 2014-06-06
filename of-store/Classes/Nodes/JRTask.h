@@ -11,7 +11,7 @@
 @class JRProject;
 
 @interface JRTask : JROFObject {
-    NSString *_name, *_ofid;
+    NSString *_name, *_id;
     NSString *_projectName, *_projectID;
     NSDate *_creationDate, *_completionDate;
     BOOL _completed;

@@ -12,7 +12,7 @@
 //Children
 #import "JRProject.h"
 
-static NSArray *kJRForbiddenNames;
+static NSArray *kJRExcludedFolders;
 
 @implementation JRFolder
 #pragma mark Initializer
@@ -36,17 +36,12 @@ static NSArray *kJRForbiddenNames;
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid) _ofid = self.folder.id;
-    return _ofid;
-}
-
--(BOOL)shouldBeSkipped {
-    return [[JRFolder forbiddenNames] containsObject:self.name];
+-(NSString *)id {
+    if (!_id) _id = self.folder.id;
+    return _id;
 }
 
 -(void)populateChildren {
-    if (self.shouldBeSkipped) return;
     for (OmniFocusFolder *f in self.folder.folders) {
         JRFolder *jrf = [JRFolder folderWithFolder:f parent:self];
         [self.folders addObject:jrf];
@@ -66,12 +61,4 @@ static NSArray *kJRForbiddenNames;
     for (JRProject *p in self.projects)
         [p each:function];
 }
-         
-#pragma mark Private methods
-+(NSArray *)forbiddenNames { //TKTKTK extract into command-line argument
-    if (!kJRForbiddenNames)
-        kJRForbiddenNames = @[@"Recurring Tasks",@"Template"];
-    return kJRForbiddenNames;
-}
-
 @end

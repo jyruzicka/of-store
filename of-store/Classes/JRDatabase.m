@@ -36,11 +36,15 @@ NSUInteger kJRTasksRecorded = 0;
     return self;
 }
 
+-(void)dealloc {
+    if (_database) [_database close];
+}
+
 +(id)databaseWithLocation:(NSString *)location {
     return [[self alloc] initWithLocation:location];
 }
 
--(BOOL)databaseIsLegal {
+-(BOOL)isLegal {
     NSFileManager *fm = [NSFileManager defaultManager];
 
     NSString *kanbanPath = [self.location stringByStandardizingPath];
@@ -89,7 +93,7 @@ NSUInteger kJRTasksRecorded = 0;
 }
 
 -(NSError *)saveTask:(JRTask *)t {
-    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM tasks WHERE ofid=?",t.ofid];
+    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM tasks WHERE ofid=?",t.id];
     NSString *query;
     if (count > 0) // UPDATE required
         query = kJRTasksUpdate;
@@ -103,7 +107,7 @@ NSUInteger kJRTasksRecorded = 0;
                      t.ancestry,
                      t.completionDate,
                      t.creationDate,
-                     t.ofid];
+                     t.id];
     
     if (![self.database executeUpdate:query withArgumentsInArray:args])
         return [self.database lastError];
@@ -114,7 +118,7 @@ NSUInteger kJRTasksRecorded = 0;
 }
 
 -(NSError *)saveProject:(JRProject *)p {
-    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM projects WHERE ofid=?",p.ofid];
+    NSUInteger count = [self.database intForQuery:@"SELECT COUNT(*) FROM projects WHERE ofid=?",p.id];
     NSString *query;
     if (count > 0) // UPDATE required
         query = kJRProjectsUpdate;
@@ -126,7 +130,7 @@ NSUInteger kJRTasksRecorded = 0;
                       p.ancestry,
                       p.completionDate,
                       p.creationDate,
-                      p.ofid];
+                      p.id];
     
     if (![self.database executeUpdate:query withArgumentsInArray:args])
         return [self.database lastError];

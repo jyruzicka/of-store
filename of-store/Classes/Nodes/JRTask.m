@@ -46,7 +46,7 @@
 }
 
 -(NSString *)projectID {
-    if (!_projectID) _projectID = self.parent.ofid;
+    if (!_projectID) _projectID = self.parent.id;
     return _projectID;
 }
 
@@ -57,9 +57,9 @@
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid) _ofid = self.task.id;
-    return _ofid;
+-(NSString *)id {
+    if (!_id) _id = self.task.id;
+    return _id;
 }
 
 -(BOOL)shouldBeRecorded {

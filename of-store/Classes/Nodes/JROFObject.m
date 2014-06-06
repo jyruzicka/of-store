@@ -23,22 +23,22 @@
 }
 
 -(NSString *)name { return nil; }
--(NSString *)ofid { return nil; }
+-(NSString *)id { return nil; }
 
--(BOOL) isRoot { return NO; }
--(BOOL) shouldBeSkipped { return NO; }
+//Don't record abstract class!
 -(BOOL) shouldBeRecorded { return NO; }
 
+
 -(NSString *)ancestry {
-    if (self.isRoot || self.parent.isRoot)
-        return @"";
-    else {
-        NSString *parentsAncestry = self.parent.ancestry;
-        if ([parentsAncestry isEqualToString:@""])
+    if (self.parent) {
+        NSString *pa = self.parent.ancestry;
+        if ([pa isEqualToString:@""])
             return self.parent.name;
         else
-            return [NSString stringWithFormat:@"%@|%@",parentsAncestry, self.parent.name];
+            return [NSString stringWithFormat:@"%@|%@",pa, self.parent.name];
     }
+    else
+        return @"";
 }
 
 -(void)populateChildren{}

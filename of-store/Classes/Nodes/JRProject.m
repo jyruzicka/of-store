@@ -48,9 +48,9 @@
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid) _ofid = self.project.id;
-    return _ofid;
+-(NSString *)id {
+    if (!_id) _id = self.project.id;
+    return _id;
 }
 
 -(BOOL)shouldBeRecorded {

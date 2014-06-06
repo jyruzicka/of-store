@@ -20,7 +20,7 @@
 -(id)initWithLocation:(NSString *)location;
 +(id)databaseWithLocation:(NSString *)location;
 
--(BOOL)databaseIsLegal;
+-(BOOL)isLegal;
 
 -(FMDatabase *)database;
 
