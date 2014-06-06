@@ -17,11 +17,49 @@
 //Logging
 #import "JRLogger.h"
 
+//Options
+#import <BRLOptionParser/BRLOptionParser.h>
+
+static const NSString *VERSION_NUMBER = @"1.0.0";
+
 int main(int argc, const char * argv[])
 {
     @autoreleasepool {
+        NSError *err;
+        
+        //BRLOP Arguments
+        BOOL debug=NO;
+        NSString *dbPath;
+        
+        //Logger init
         JRLogger *logger = [JRLogger logger];
-        if (argc != 2) [logger fail:@"Please specify a file to output data to."];
+        
+        //------------------------------------------------------------------------------
+        // Initialize option parser
+        BRLOptionParser *options = [BRLOptionParser new];
+        [options setBanner: @"of-store Version %@\n\nusage: %s [--debug] --out=DATABASE\n       %s --help\n",VERSION_NUMBER,argv[0], argv[0]];
+        
+        [options addOption:"debug" flag:'d' description:@"Activates debug mode, with appropriate output" value:&debug];
+        [options addOption:"out" flag:'o' description:@"Name of database. Required" argument:&dbPath];
+        
+        __weak typeof(options) weakOptions = options;
+        [options addOption:"help" flag:'h' description:@"Show this message" block:^{
+            [logger log:@"%@",weakOptions.description];
+            exit(EXIT_SUCCESS);
+        }];
+        
+        if (![options parseArgc:argc argv:argv error:&err])
+            [logger fail:@"%s: %@",argv[0], err.localizedDescription];
+        //------------------------------------------------------------------------------
+        
+        if (debug)
+            logger.debugging = YES;
+        
+        // Check for database location
+        if (!dbPath) [logger fail: @"Option --out is required."];
+
+
+
         
         NSString *ofs = @"com.omnigroup.OmniFocus2";
         // Fetch OmniFocus stuff
