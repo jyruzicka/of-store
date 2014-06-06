@@ -14,15 +14,11 @@
 
 static NSArray *kJRForbiddenNames;
 
-@interface JRFolder ()
-@property (atomic) OmniFocusFolder *folder;
-@end
-
 @implementation JRFolder
 #pragma mark Initializer
 -(id)initWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent]) {
-        self.folder = folder;
+        _folder = folder;
         self.folders = [NSMutableArray array];
         self.projects = [NSMutableArray array];
     }
@@ -36,14 +32,12 @@ static NSArray *kJRForbiddenNames;
 
 #pragma mark Inherited
 -(NSString *)name {
-    if (!_name)
-        _name = self.folder.name;
+    if (!_name) _name = self.folder.name;
     return _name;
 }
 
 -(NSString *)ofid {
-    if (!_ofid)
-        _ofid = self.folder.id;
+    if (!_ofid) _ofid = self.folder.id;
     return _ofid;
 }
 
@@ -74,7 +68,7 @@ static NSArray *kJRForbiddenNames;
 }
          
 #pragma mark Private methods
-+(NSArray *)forbiddenNames {
++(NSArray *)forbiddenNames { //TKTKTK extract into command-line argument
     if (!kJRForbiddenNames)
         kJRForbiddenNames = @[@"Recurring Tasks",@"Template"];
     return kJRForbiddenNames;

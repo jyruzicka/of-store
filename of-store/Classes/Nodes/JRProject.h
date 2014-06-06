@@ -16,7 +16,7 @@
 }
 
 @property (atomic,readonly) OmniFocusProject *project;
-@property (atomic) NSMutableArray *tasks;
+@property (atomic,readonly) NSMutableArray *tasks;
 
 #pragma mark Initializer
 -(id)initWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent;

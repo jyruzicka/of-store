@@ -57,7 +57,8 @@ int main(int argc, const char * argv[])
         
         // Check for database location
         if (!dbPath) [logger fail: @"Option --out is required."];
-
+        
+        
 
 
         

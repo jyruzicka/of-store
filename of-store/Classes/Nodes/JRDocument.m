@@ -13,16 +13,12 @@
 #import "JRFolder.h"
 #import "JRProject.h"
 
-@interface JRDocument ()
-@property (atomic) OmniFocusDocument *document;
-@end
-
 @implementation JRDocument
 
 #pragma mark Initializer
 -(id)initWithDocument:(OmniFocusDocument *)document {
     if (self = [super initWithParent:nil]) {
-        self.document = document;
+        _document = document;
         self.folders = [NSMutableArray array];
         self.projects = [NSMutableArray array];
     }

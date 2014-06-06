@@ -15,7 +15,6 @@
     NSString *_projectName, *_projectID;
     NSDate *_creationDate, *_completionDate;
     BOOL _completed;
-    JRProject *project;
 }
 
 @property (atomic,readonly) OmniFocusTask *task;
