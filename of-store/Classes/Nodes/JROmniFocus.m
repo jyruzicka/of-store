@@ -92,7 +92,7 @@ static NSArray *kJRExcludeFolders;
 #pragma mark - Private methods
 
 +(OmniFocusApplication *)omnifocus{
-    if (!kJROmniFocus || self.isRunning) {
+    if (!kJROmniFocus && self.isRunning) {
         [[JRLogger logger] debug:@"Connecting to bundle: %@",self.processString];
         kJROmniFocus = [SBApplication applicationWithBundleIdentifier:self.processString];
     }
@@ -103,8 +103,9 @@ static NSArray *kJRExcludeFolders;
     if (!kJRProcessString) {
         NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
         for (NSRunningApplication *app in apps) {
+            if (!app.bundleIdentifier) continue;
             NSRange occurance = [app.bundleIdentifier rangeOfString:(NSString *)kJRIdentifierPrefix];
-            if (occurance.location == 0) { //starts with the identifier prefix
+            if (occurance.location != NSNotFound) { //string in the bundle identifier
                 kJRProcessString = app.bundleIdentifier;
                 break;
             }

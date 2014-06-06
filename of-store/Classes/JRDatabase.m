@@ -13,6 +13,8 @@
 #import "JRProject.h"
 #import "JRTask.h"
 
+#import "JRLogger.h"
+
 //Database
 #import <FMDB/FMDatabase.h>
 #import <FMDB/FMDatabaseAdditions.h>
@@ -32,6 +34,7 @@ NSUInteger kJRTasksRecorded = 0;
 -(id)initWithLocation:(NSString *)location {
     if (self = [super init]) {
         self.location = location;
+        logger = [JRLogger logger];
     }
     return self;
 }
@@ -113,6 +116,7 @@ NSUInteger kJRTasksRecorded = 0;
         return [self.database lastError];
     else {
         kJRTasksRecorded++;
+        [logger debug:@"  Task saved: %@", t.name];
         return nil;
     }
 }
@@ -136,6 +140,7 @@ NSUInteger kJRTasksRecorded = 0;
         return [self.database lastError];
     else {
         kJRProjectsRecorded++;
+        [logger debug:@"  Project saved: %@", p.name];
         return nil;
     }
 }
