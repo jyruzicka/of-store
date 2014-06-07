@@ -11,17 +11,13 @@
 //Children
 #import "JRTask.h"
 
-@interface JRProject ()
-@property (atomic) OmniFocusProject *project;
-@end
-
 @implementation JRProject
 
 #pragma mark Initializer
 -(id)initWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent]) {
-        self.project = project;
-        self.tasks = [NSMutableArray array];
+        _project = project;
+        _tasks = [NSMutableArray array];
     }
     return self;
 }
@@ -31,16 +27,14 @@
 }
 
 -(NSDate *)creationDate {
-    if (!_creationDate)
-        _creationDate = self.project.creationDate;
+    if (!_creationDate) _creationDate = self.project.creationDate;
     return _creationDate;
 }
 
 -(NSDate *)completionDate {
     if (!self.completed) return nil;
     
-    if (!_completionDate)
-        _completionDate = [self.project.completionDate get];
+    if (!_completionDate) _completionDate = [self.project.completionDate get];
     return _completionDate;
 }
 
@@ -50,15 +44,13 @@
 
 #pragma mark Inherited
 -(NSString *)name {
-    if (!_name)
-        _name = self.project.name;
+    if (!_name) _name = self.project.name;
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid)
-        _ofid = self.project.id;
-    return _ofid;
+-(NSString *)id {
+    if (!_id) _id = self.project.id;
+    return _id;
 }
 
 -(BOOL)shouldBeRecorded {
@@ -68,7 +60,7 @@
 -(void)populateChildren {
     for (OmniFocusFlattenedTask *ft in self.project.rootTask.flattenedTasks) {
         JRTask *jrt = [JRTask taskWithTask:(OmniFocusTask *)ft parent:self];
-        [self.tasks addObject:jrt]; // Tasks do no populate children
+        [_tasks addObject:jrt]; // Tasks do no populate children
     }
 }
 

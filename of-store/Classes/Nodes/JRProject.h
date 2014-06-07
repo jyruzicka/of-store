@@ -10,13 +10,13 @@
 @class OmniFocusProject;
 
 @interface JRProject : JROFObject {
-    NSString *_name, *_ofid;
+    NSString *_name, *_id;
     NSDate *_creationDate, *_completionDate;
     BOOL _completed;
 }
 
 @property (atomic,readonly) OmniFocusProject *project;
-@property (atomic) NSMutableArray *tasks;
+@property (atomic,readonly) NSMutableArray *tasks;
 
 #pragma mark Initializer
 -(id)initWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent;

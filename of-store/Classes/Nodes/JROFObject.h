@@ -18,12 +18,12 @@
 
 #pragma mark Properties
 -(NSString *)name;
--(NSString *)ofid;
+-(NSString *)id;
 
 #pragma mark Derived methods
--(BOOL)isRoot;
--(BOOL)shouldBeSkipped;
+//Should this object be recorded to the database?
 -(BOOL)shouldBeRecorded;
+
 -(NSString *)ancestry;
 -(void)populateChildren;
 -(void)each:(void (^)(JROFObject *))function;

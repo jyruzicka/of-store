@@ -12,17 +12,13 @@
 //Children
 #import "JRProject.h"
 
-static NSArray *kJRForbiddenNames;
-
-@interface JRFolder ()
-@property (atomic) OmniFocusFolder *folder;
-@end
+static NSArray *kJRExcludedFolders;
 
 @implementation JRFolder
 #pragma mark Initializer
 -(id)initWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent]) {
-        self.folder = folder;
+        _folder = folder;
         self.folders = [NSMutableArray array];
         self.projects = [NSMutableArray array];
     }
@@ -36,23 +32,16 @@ static NSArray *kJRForbiddenNames;
 
 #pragma mark Inherited
 -(NSString *)name {
-    if (!_name)
-        _name = self.folder.name;
+    if (!_name) _name = self.folder.name;
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid)
-        _ofid = self.folder.id;
-    return _ofid;
-}
-
--(BOOL)shouldBeSkipped {
-    return [[JRFolder forbiddenNames] containsObject:self.name];
+-(NSString *)id {
+    if (!_id) _id = self.folder.id;
+    return _id;
 }
 
 -(void)populateChildren {
-    if (self.shouldBeSkipped) return;
     for (OmniFocusFolder *f in self.folder.folders) {
         JRFolder *jrf = [JRFolder folderWithFolder:f parent:self];
         [self.folders addObject:jrf];
@@ -72,12 +61,4 @@ static NSArray *kJRForbiddenNames;
     for (JRProject *p in self.projects)
         [p each:function];
 }
-         
-#pragma mark Private methods
-+(NSArray *)forbiddenNames {
-    if (!kJRForbiddenNames)
-        kJRForbiddenNames = @[@"Recurring Tasks",@"Template"];
-    return kJRForbiddenNames;
-}
-
 @end

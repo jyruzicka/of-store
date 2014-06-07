@@ -9,16 +9,12 @@
 #import "JRTask.h"
 #import "OmniFocus.h"
 
-@interface JRTask ()
-@property (atomic) OmniFocusTask *task;
-@end
-
 @implementation JRTask
 
 #pragma mark Initializer
 -(id)initWithTask:(OmniFocusTask *)task parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent])
-        self.task = task;
+        _task = task;
     return self;
 }
 
@@ -29,16 +25,14 @@
 #pragma mark Properties
 
 -(NSDate *)creationDate {
-    if (!_creationDate)
-        _creationDate = self.task.creationDate;
+    if (!_creationDate) _creationDate = self.task.creationDate;
     return _creationDate;
 }
 
 -(NSDate *)completionDate {
     if (!self.completed) return nil;
     
-    if (!_completionDate)
-        _completionDate = [self.task.completionDate get];
+    if (!_completionDate) _completionDate = [self.task.completionDate get];
     return _completionDate;
 }
 
@@ -47,29 +41,25 @@
 }
 
 -(NSString *)projectName {
-    if (!_projectName)
-        _projectName = self.parent.name;
+    if (!_projectName) _projectName = self.parent.name;
     return _projectName;
 }
 
 -(NSString *)projectID {
-    if (!_projectID)
-        _projectID = self.parent.ofid;
+    if (!_projectID) _projectID = self.parent.id;
     return _projectID;
 }
 
 
 #pragma mark Inherited
 -(NSString *)name {
-    if (!_name)
-        _name = self.task.name;
+    if (!_name) _name = self.task.name;
     return _name;
 }
 
--(NSString *)ofid {
-    if (!_ofid)
-        _ofid = self.task.id;
-    return _ofid;
+-(NSString *)id {
+    if (!_id) _id = self.task.id;
+    return _id;
 }
 
 -(BOOL)shouldBeRecorded {

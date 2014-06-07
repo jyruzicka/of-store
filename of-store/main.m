@@ -7,62 +7,84 @@
 //
 
 #import <Foundation/Foundation.h>
+
+// OmniFocus base
 #import "JRDatabase.h"
-#import "OmniFocus.h"
-
-//JROFObject classes
+#import "JROmniFocus.h"
 #import "JROFObject.h"
-#import "JRDocument.h"
 
-void NSPrint(NSString * str,...) {
-    va_list args;
-    va_start(args,str);
-    
-    if (![str hasSuffix:@"\n"]) str = [str stringByAppendingString:@"\n"];
-    
-    NSString *outputString = [[NSString alloc] initWithFormat:str arguments:args];
-    va_end(args);
-    [outputString writeToFile:@"/dev/stdout" atomically:NO encoding:NSUTF8StringEncoding error:nil];
+//Logging
+#import "JRLogger.h"
 
-}
+//Options
+#import <BRLOptionParser/BRLOptionParser.h>
+
+static const NSString *VERSION_NUMBER = @"1.0.0";
 
 int main(int argc, const char * argv[])
 {
-    if (argc != 2) {
-        NSPrint(@"Please specify a file to output %@ to.", @"data");
-        exit(1);
-    }
-
     @autoreleasepool {
-        NSString *ofs = @"com.omnigroup.omnifocus";
-        // Fetch OmniFocus stuff
-        OmniFocusApplication *of = [SBApplication applicationWithBundleIdentifier:ofs];
+        NSError *err;
         
-        NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
-        BOOL ofRunning = NO;
-        for (NSRunningApplication *app in apps)
-            if ([app.bundleIdentifier isEqualToString:ofs]) {
-                ofRunning = YES;
-                break;
-            }
+        //BRLOP Arguments
+        BOOL debug=NO;
+        NSString *dbPath;
+        NSString *excludeFolders;
         
-        if (!ofRunning) return 0;
+        //Logger init
+        JRLogger *logger = [JRLogger logger];
         
-        // Ensure database is up and running
-        NSString *dbLocation = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
-        JRDatabase *db = [JRDatabase databaseWithLocation:dbLocation];
-        if (![db databaseIsLegal]) {
-            NSPrint(@"I cannot create a database here. Are you sure the directory exists?");
-            exit(1);
+        //------------------------------------------------------------------------------
+        // Initialize option parser
+        BRLOptionParser *options = [BRLOptionParser new];
+        [options setBanner: @"of-store Version %@\n\nusage: %s [--debug] --out=DATABASE\n       %s --help\n",VERSION_NUMBER,argv[0], argv[0]];
+        
+        [options addOption:"debug" flag:'d' description:@"Activates debug mode, with appropriate output" value:&debug];
+        [options addOption:"out" flag:'o' description:@"Name of database. Required" argument:&dbPath];
+        [options addOption:"exclude" flag:'x' description:@"Exclude projects in these top-level folders" argument:&excludeFolders];
+
+        
+        __weak typeof(options) weakOptions = options;
+        [options addOption:"help" flag:'h' description:@"Show this message" block:^{
+            [logger log:@"%@",weakOptions.description];
+            exit(EXIT_SUCCESS);
+        }];
+        
+        if (![options parseArgc:argc argv:argv error:&err])
+            [logger fail:@"%s: %@",argv[0], err.localizedDescription];
+        //------------------------------------------------------------------------------
+        
+        if (debug)
+            logger.debugging = YES;
+        
+        // Check for database location
+        if (!dbPath) [logger fail: @"Option --out is required."];
+        
+        //Quit if OmniFocus isn't running
+        if (![JROmniFocus isRunning]) {
+            [logger debug:@"Omnifocus isn't running. Quitting..."];
+            exit(EXIT_SUCCESS);
         }
         
-        JRDocument *root = [JRDocument documentWithDocument:[of defaultDocument]];
-        [root populateChildren];
-        [root each:^(JROFObject *o){
-            if ([o shouldBeRecorded]) {
+        //Quit if not pro
+        if (![JROmniFocus isPro]) [logger fail:@"You appear to be using OmniFocus Standard. kanban-fetch will only work with OmniFocus Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
+        
+        //Determine path to write to
+        [logger debug:@"Setting database path to %@", dbPath];
+        JRDatabase *db = [JRDatabase databaseWithLocation:dbPath];
+        if (!db.isLegal) [logger fail:@"Can't write to database: %@", dbPath];
+        
+        //Determine folder exclusion
+        if (excludeFolders) {
+            [logger debug:@"Excluding folders: %@",excludeFolders];
+            [JROmniFocus excludeFolders:[excludeFolders componentsSeparatedByString:@","]];
+        }
+        
+        [JROmniFocus each:^(JROFObject *o){
+            if (o.shouldBeRecorded) {
                 NSError *err;
                 err = [db saveOFObject:o];
-                if (err) NSPrint(@"Error [%i]: %@", err.code, err.localizedDescription);
+                if (err) [logger fail:@"Error while saving %@\n[%i]: %@", o.name, err.code, err.localizedDescription];
             }
         }];
         
@@ -78,8 +100,7 @@ int main(int argc, const char * argv[])
         else
             taskString = [NSString stringWithFormat:@"%lu tasks", db.tasksRecorded];
     
-        NSString *output = [NSString stringWithFormat:@"%@ and %@ recorded.", projString, taskString];
-        NSPrint(output);
+        [logger debug:@"%@ and %@ recorded.", projString, taskString];
     }
     return 0;
 }

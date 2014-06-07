@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 @class JROFObject,  JRProject, JRTask;
 @class FMDatabase;
+@class JRLogger;
 
 
 @interface JRDatabase : NSObject {
     FMDatabase *_database;
+    JRLogger *logger;
 }
 
 @property NSString *location;
@@ -20,7 +22,7 @@
 -(id)initWithLocation:(NSString *)location;
 +(id)databaseWithLocation:(NSString *)location;
 
--(BOOL)databaseIsLegal;
+-(BOOL)isLegal;
 
 -(FMDatabase *)database;
 
