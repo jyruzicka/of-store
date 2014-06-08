@@ -11,13 +11,16 @@
 
 @interface JRFolder : JROFObject {
     NSString *_name, *_id;
+    NSMutableArray *_folders, *_projects;
 }
 
 @property (atomic,readonly) OmniFocusFolder *folder;
-@property (atomic) NSMutableArray *folders;
-@property (atomic) NSMutableArray *projects;
 
 #pragma mark Initializer
 -(id)initWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent;
 +(id)folderWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent;
+
+#pragma mark Getters
+-(NSMutableArray *)folders;
+-(NSMutableArray *)projects;
 @end

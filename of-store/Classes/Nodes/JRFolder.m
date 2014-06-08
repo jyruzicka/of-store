@@ -19,8 +19,6 @@ static NSArray *kJRExcludedFolders;
 -(id)initWithFolder:(OmniFocusFolder *)folder parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent]) {
         _folder = folder;
-        self.folders = [NSMutableArray array];
-        self.projects = [NSMutableArray array];
     }
     
     return self;
@@ -30,7 +28,30 @@ static NSArray *kJRExcludedFolders;
     return [[self alloc] initWithFolder:folder parent:parent];
 }
 
-#pragma mark Inherited
+#pragma mark Getters
+-(NSMutableArray *)folders {
+    if (!_folders) {
+        _folders = [NSMutableArray arrayWithCapacity:self.folder.folders.count];
+        for (OmniFocusFolder *f in self.folder.folders) {
+            JRFolder *jrf = [JRFolder folderWithFolder:f parent:self];
+            [_folders addObject:jrf];
+        }
+    }
+    return _folders;
+}
+
+-(NSMutableArray *)projects {
+    if (!_projects) {
+        _projects = [NSMutableArray arrayWithCapacity:self.folder.projects.count];
+        for (OmniFocusProject *p in self.folder.projects) {
+            JRProject *jrp = [JRProject projectWithProject:p parent:self];
+            [_projects addObject:jrp];
+        }
+    }
+    return _projects;
+}
+
+#pragma mark Properties
 -(NSString *)name {
     if (!_name) _name = self.folder.name;
     return _name;
@@ -39,19 +60,6 @@ static NSArray *kJRExcludedFolders;
 -(NSString *)id {
     if (!_id) _id = self.folder.id;
     return _id;
-}
-
--(void)populateChildren {
-    for (OmniFocusFolder *f in self.folder.folders) {
-        JRFolder *jrf = [JRFolder folderWithFolder:f parent:self];
-        [self.folders addObject:jrf];
-        [jrf populateChildren];
-    }
-    for (OmniFocusProject *p in self.folder.projects) {
-        JRProject *jrp = [JRProject projectWithProject:p parent:self];
-        [self.projects addObject:jrp];
-        [jrp populateChildren];
-    }
 }
 
 -(void)each:(void (^)(JROFObject *))function {

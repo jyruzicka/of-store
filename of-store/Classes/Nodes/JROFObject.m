@@ -41,7 +41,6 @@
         return @"";
 }
 
--(void)populateChildren{}
 -(void)each:(void (^)(JROFObject *))function {
     function(self);
 }
