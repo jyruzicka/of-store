@@ -17,7 +17,6 @@
 -(id)initWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent {
     if (self = [super initWithParent:parent]) {
         _project = project;
-        _tasks = [NSMutableArray array];
     }
     return self;
 }
@@ -25,6 +24,32 @@
 +(id)projectWithProject:(OmniFocusProject *)project parent:(JROFObject *)parent {
     return [[self alloc] initWithProject:project parent:parent];
 }
+
+#pragma mark Getters
+
+-(NSMutableArray *)tasks {
+    if (!_tasks) {
+        _tasks = [NSMutableArray arrayWithCapacity:self.project.rootTask.flattenedTasks.count];
+        for (OmniFocusFlattenedTask *ft in self.project.rootTask.flattenedTasks) {
+            JRTask *jrt = [JRTask taskWithTask:(OmniFocusTask *)ft parent:self];
+            [_tasks addObject:jrt];
+        }
+    }
+    return _tasks;
+}
+
+#pragma mark Properties
+
+-(NSString *)name {
+    if (!_name) _name = self.project.name;
+    return _name;
+}
+
+-(NSString *)id {
+    if (!_id) _id = self.project.id;
+    return _id;
+}
+
 
 -(NSDate *)creationDate {
     if (!_creationDate) _creationDate = self.project.creationDate;
@@ -42,26 +67,10 @@
     return self.project.completed;
 }
 
-#pragma mark Inherited
--(NSString *)name {
-    if (!_name) _name = self.project.name;
-    return _name;
-}
-
--(NSString *)id {
-    if (!_id) _id = self.project.id;
-    return _id;
-}
+#pragma mark Utility methods
 
 -(BOOL)shouldBeRecorded {
     return self.completed;
-}
-
--(void)populateChildren {
-    for (OmniFocusFlattenedTask *ft in self.project.rootTask.flattenedTasks) {
-        JRTask *jrt = [JRTask taskWithTask:(OmniFocusTask *)ft parent:self];
-        [_tasks addObject:jrt]; // Tasks do no populate children
-    }
 }
 
 -(void)each:(void (^)(JROFObject *))function {

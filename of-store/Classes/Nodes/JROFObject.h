@@ -25,6 +25,5 @@
 -(BOOL)shouldBeRecorded;
 
 -(NSString *)ancestry;
--(void)populateChildren;
 -(void)each:(void (^)(JROFObject *))function;
 @end

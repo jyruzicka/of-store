@@ -61,13 +61,14 @@ int main(int argc, const char * argv[])
         if (!dbPath) [logger fail: @"Option --out is required."];
         
         //Quit if OmniFocus isn't running
-        if (![JROmniFocus isRunning]) {
+        JROmniFocus *of = [JROmniFocus instance];
+        if (!of) {
             [logger debug:@"Omnifocus isn't running. Quitting..."];
             exit(EXIT_SUCCESS);
         }
         
         //Quit if not pro
-        if (![JROmniFocus isPro]) [logger fail:@"You appear to be using OmniFocus Standard. kanban-fetch will only work with OmniFocus Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
+        if (!of.isPro) [logger fail:@"You appear to be using OmniFocus Standard. kanban-fetch will only work with OmniFocus Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
         
         //Determine path to write to
         [logger debug:@"Setting database path to %@", dbPath];
@@ -77,10 +78,10 @@ int main(int argc, const char * argv[])
         //Determine folder exclusion
         if (excludeFolders) {
             [logger debug:@"Excluding folders: %@",excludeFolders];
-            [JROmniFocus excludeFolders:[excludeFolders componentsSeparatedByString:@","]];
+            of.excludedFolders = [excludeFolders componentsSeparatedByString:@","];
         }
         
-        [JROmniFocus each:^(JROFObject *o){
+        [of each:^(JROFObject *o){
             if (o.shouldBeRecorded) {
                 NSError *err;
                 err = [db saveOFObject:o];
