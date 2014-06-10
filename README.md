@@ -12,4 +12,4 @@ Download and build in XCode. The result will be a binary file you can run in ter
 
 `of-store` will record completed projects and tasks in OmniFocus. Of note, it will **exclude** any projects or tasks in a folder named "Recurring Tasks" or "Template". These are set by `+[JRFolder forbiddenNames]`, and you can change these to suit you.
 
-Once of-store has run it will attempt to log its activity. I do this using a custom application, and the code is contained withing `JRLog`. You may want to change this to suit your needs.
+Once of-store has run it will attempt to log its activity. I do this using a custom application, and the code is contained within `JRLog`. You may want to change this to suit your needs.
