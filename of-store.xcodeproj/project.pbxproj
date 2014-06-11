@@ -7,17 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D152C051896ED4900E9161D /* JROFObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D152C041896ED4900E9161D /* JROFObject.m */; };
-		3D152C081896EE6400E9161D /* JRFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D152C071896EE6400E9161D /* JRFolder.m */; };
-		3D152C0B1896F05100E9161D /* JRProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D152C0A1896F05100E9161D /* JRProject.m */; };
-		3D152C0E1896F22600E9161D /* JRTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D152C0D1896F22600E9161D /* JRTask.m */; };
 		3D759FE9184B14FD008519BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D759FE8184B14FD008519BD /* Foundation.framework */; };
 		3D759FEC184B14FD008519BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D759FEB184B14FD008519BD /* main.m */; };
 		3D759FF0184B14FD008519BD /* of_store.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D759FEF184B14FD008519BD /* of_store.1 */; };
 		3D759FF8184B16C6008519BD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D759FF7184B16C6008519BD /* ScriptingBridge.framework */; };
 		3D78F072194177B2006A7E01 /* JRLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78F071194177B2006A7E01 /* JRLogger.m */; };
-		3D78F07519417C58006A7E01 /* JROmniFocus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D78F07419417C58006A7E01 /* JROmniFocus.m */; };
-		3DACD52C184D1A25000D10F7 /* JRDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DACD52B184D1A25000D10F7 /* JRDatabase.m */; };
 		858299079ED54D678F5E472A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A4B2FDF6A14AA2A62F5E26 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -35,28 +29,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		28B485145B464B279FEFECA0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = "of-store/Pods/Pods.xcconfig"; sourceTree = "<group>"; };
-		3D152C031896ED4900E9161D /* JROFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROFObject.h; sourceTree = "<group>"; };
-		3D152C041896ED4900E9161D /* JROFObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROFObject.m; sourceTree = "<group>"; };
-		3D152C061896EE6400E9161D /* JRFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFolder.h; sourceTree = "<group>"; };
-		3D152C071896EE6400E9161D /* JRFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFolder.m; sourceTree = "<group>"; };
-		3D152C091896F05100E9161D /* JRProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProject.h; sourceTree = "<group>"; };
-		3D152C0A1896F05100E9161D /* JRProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProject.m; sourceTree = "<group>"; };
-		3D152C0C1896F22600E9161D /* JRTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRTask.h; sourceTree = "<group>"; };
-		3D152C0D1896F22600E9161D /* JRTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRTask.m; sourceTree = "<group>"; };
+		28B485145B464B279FEFECA0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		3D759FE5184B14FD008519BD /* of-store */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "of-store"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D759FE8184B14FD008519BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3D759FEB184B14FD008519BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D759FEE184B14FD008519BD /* of-store-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "of-store-Prefix.pch"; sourceTree = "<group>"; };
 		3D759FEF184B14FD008519BD /* of_store.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = of_store.1; sourceTree = "<group>"; };
-		3D759FF6184B16B9008519BD /* OmniFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OmniFocus.h; sourceTree = "<group>"; };
 		3D759FF7184B16C6008519BD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		3D78F070194177B2006A7E01 /* JRLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRLogger.h; sourceTree = "<group>"; };
 		3D78F071194177B2006A7E01 /* JRLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLogger.m; sourceTree = "<group>"; };
-		3D78F07319417C58006A7E01 /* JROmniFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROmniFocus.h; sourceTree = "<group>"; };
-		3D78F07419417C58006A7E01 /* JROmniFocus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROmniFocus.m; sourceTree = "<group>"; };
-		3DACD52A184D1A25000D10F7 /* JRDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDatabase.h; sourceTree = "<group>"; };
-		3DACD52B184D1A25000D10F7 /* JRDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDatabase.m; sourceTree = "<group>"; };
 		70A4B2FDF6A14AA2A62F5E26 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -74,23 +55,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D152BFF1896DD3500E9161D /* Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				3D78F07319417C58006A7E01 /* JROmniFocus.h */,
-				3D78F07419417C58006A7E01 /* JROmniFocus.m */,
-				3D152C031896ED4900E9161D /* JROFObject.h */,
-				3D152C041896ED4900E9161D /* JROFObject.m */,
-				3D152C061896EE6400E9161D /* JRFolder.h */,
-				3D152C071896EE6400E9161D /* JRFolder.m */,
-				3D152C091896F05100E9161D /* JRProject.h */,
-				3D152C0A1896F05100E9161D /* JRProject.m */,
-				3D152C0C1896F22600E9161D /* JRTask.h */,
-				3D152C0D1896F22600E9161D /* JRTask.m */,
-			);
-			path = Nodes;
-			sourceTree = "<group>";
-		};
 		3D759FDC184B14FD008519BD = {
 			isa = PBXGroup;
 			children = (
@@ -138,21 +102,9 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3D78F0761941C100006A7E01 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				3DACD52A184D1A25000D10F7 /* JRDatabase.h */,
-				3DACD52B184D1A25000D10F7 /* JRDatabase.m */,
-			);
-			name = Database;
-			sourceTree = "<group>";
-		};
 		3DBEFDB3184B181900C42D78 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3D78F0761941C100006A7E01 /* Database */,
-				3D759FF6184B16B9008519BD /* OmniFocus.h */,
-				3D152BFF1896DD3500E9161D /* Nodes */,
 				3D78F070194177B2006A7E01 /* JRLogger.h */,
 				3D78F071194177B2006A7E01 /* JRLogger.m */,
 			);
@@ -221,7 +173,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
 		};
 		B0D135FCAFB644E0866824D1 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -235,7 +186,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/of-store/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -247,12 +198,6 @@
 			files = (
 				3D759FEC184B14FD008519BD /* main.m in Sources */,
 				3D78F072194177B2006A7E01 /* JRLogger.m in Sources */,
-				3D152C0E1896F22600E9161D /* JRTask.m in Sources */,
-				3DACD52C184D1A25000D10F7 /* JRDatabase.m in Sources */,
-				3D152C0B1896F05100E9161D /* JRProject.m in Sources */,
-				3D152C081896EE6400E9161D /* JRFolder.m in Sources */,
-				3D152C051896ED4900E9161D /* JROFObject.m in Sources */,
-				3D78F07519417C58006A7E01 /* JROmniFocus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

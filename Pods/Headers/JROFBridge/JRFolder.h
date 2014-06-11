@@ -1,0 +1,1 @@
+../../../../JROFBridge/Classes/JRFolder.h

@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 
 // OmniFocus base
-#import "JRDatabase.h"
-#import "JROmniFocus.h"
-#import "JROFObject.h"
+#import <JROFBridge/JROmniFocus.h>
+#import <JROFBridge/JRDatabase.h>
+#import <JROFBridge/JRTask.h>
+#import <JROFBridge/JRProject.h>
+//#import "JRDatabase.h"
+//#import "JROmniFocus.h"
+//#import "JROFObject.h"
 
 //Logging
 #import "JRLogger.h"
@@ -19,7 +23,7 @@
 //Options
 #import <BRLOptionParser/BRLOptionParser.h>
 
-static const NSString *VERSION_NUMBER = @"2.0.0";
+static const NSString *VERSION_NUMBER = @"2.1.0";
 
 int main(int argc, const char * argv[])
 {
@@ -67,14 +71,32 @@ int main(int argc, const char * argv[])
             exit(EXIT_SUCCESS);
         }
         
+        if (debug) {
+            NSString *vers;
+            switch(of.version) {
+                case JROmniFocusVersion1:
+                    vers = @"1";
+                    break;
+                case JROmniFocusVersion2:
+                    vers = @"2 Standard";
+                    break;
+                default:
+                    vers = @"2 Pro";
+            }
+            
+            [logger debug: @"OmniFocus version detected: OmniFocus %@",vers];
+        }
+        
         //Quit if not pro
-        if (!of.isPro) [logger fail:@"You appear to be using OmniFocus Standard. kanban-fetch will only work with OmniFocus Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
+        if (!of.version == JROmniFocusVersion2) [logger fail:@"You appear to be using OmniFocus 2 Standard. kanban-fetch will only work with OmniFocus 2 Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
         
         //Determine path to write to
         [logger debug:@"Setting database path to %@", dbPath];
-        JRDatabase *db = [JRDatabase databaseWithLocation:dbPath];
-        if (!db.isLegal) [logger fail:@"Can't write to database: %@", dbPath];
-        
+        JRDatabase *db = [JRDatabase databaseWithLocation:dbPath type:(JRDatabaseProjects | JRDatabaseTasks)];
+
+        if (!db.canExist)
+            [logger fail:@"Cannot create database at location: %@", dbPath];
+        //TKTKTK add in fail clauses if database won't support us here
         
         //Determine folder exclusion
         if (excludeFolders) {
@@ -82,13 +104,18 @@ int main(int argc, const char * argv[])
             of.excludedFolders = [excludeFolders componentsSeparatedByString:@","];
         }
         
-        [of each:^(JROFObject *o){
-            if (o.shouldBeRecorded) {
-                NSError *err;
-                err = [db saveOFObject:o];
-                if (err) [logger fail:@"Error while saving %@\n[%i]: %@", o.name, err.code, err.localizedDescription];
+        void (^block)(JROFObject *) = ^(JROFObject *o){
+            if (o.isCompleted) {
+                [logger debug:@"  Saving %@: %@",o.className, o.name];
+                NSError *err = [db saveOFObject:o];
+                if (err) [logger fail:@"Error while saving %@ %@\n[%i]: %@", o.className, o.name, err.code, err.localizedDescription];
             }
-        }];
+        };
+        
+        [logger debug:@"Writing tasks:"];
+        [of eachTask:block];
+        [logger debug:@"Writing projects:"];
+        [of eachProject:block];
         
         NSString *projString;
         NSString *taskString;
@@ -103,6 +130,7 @@ int main(int argc, const char * argv[])
             taskString = [NSString stringWithFormat:@"%lu tasks", db.tasksRecorded];
     
         [logger debug:@"%@ and %@ recorded.", projString, taskString];
+        [logger debug:@"Success!"];
     }
     return 0;
 }
