@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "86C52B686EE441BAADA5C9D5"
+               BlueprintIdentifier = "7093EE10A0D8447AA725A036"
                BuildableName = "libPods-JROFBridge.a"
                BlueprintName = "Pods-JROFBridge"
                ReferencedContainer = "container:Pods.xcodeproj">

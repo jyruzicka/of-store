@@ -5,22 +5,22 @@ PODS:
   - FMDB/common (2.1)
   - FMDB/standard (2.1):
     - FMDB/common
-  - JROFBridge (0.0.1):
+  - JROFBridge (0.2.4):
     - FMDB (~> 2.1)
 
 DEPENDENCIES:
   - BRLOptionParser (from `https://github.com/barrelage/BRLOptionParser.git`)
-  - JROFBridge (from `~/Programs/cocoa/JROFBridge`)
+  - JROFBridge (from `https://www.github.com/jyruzicka/JROFBridge.git`)
 
 EXTERNAL SOURCES:
   BRLOptionParser:
     :git: https://github.com/barrelage/BRLOptionParser.git
   JROFBridge:
-    :path: ~/Programs/cocoa/JROFBridge
+    :git: https://www.github.com/jyruzicka/JROFBridge.git
 
 SPEC CHECKSUMS:
   BRLOptionParser: e034c1be1a1515e9b22e752eacb8edd9abb0df4d
   FMDB: 3fd5aaf632ca4ed39e3f101e0398504e6d5b0918
-  JROFBridge: 713f62ac803545bd865f2624c7e5b77d11139134
+  JROFBridge: 63cb35c7e7a237d3a7e748f7c04f106a402884d5
 
 COCOAPODS: 0.33.1

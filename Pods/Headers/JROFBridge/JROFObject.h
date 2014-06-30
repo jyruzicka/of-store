@@ -1,1 +1,1 @@
-../../../../JROFBridge/Classes/JROFObject.h
+../../JROFBridge/Classes/JROFObject.h

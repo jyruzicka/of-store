@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "JROFBridge"
-  s.version          = "0.0.1"
+  s.version          = "0.2.4"
   s.summary          = "Bridge your program and OmniFocus."
   s.description      = <<-DESC
                        JROFBridge acts as a bridge between OmniFocus and your Cocoa application. Version differences, possibly-not-running apps, differences between AppStore and refular apps, missing values, and all other problems are taken care of. All you need to do is include the library and start using it in your app! 

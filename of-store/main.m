@@ -23,7 +23,7 @@
 //Options
 #import <BRLOptionParser/BRLOptionParser.h>
 
-static const NSString *VERSION_NUMBER = @"2.1.0";
+static const NSString *VERSION_NUMBER = @"2.1.2";
 
 int main(int argc, const char * argv[])
 {
@@ -77,7 +77,7 @@ int main(int argc, const char * argv[])
                 case JROmniFocusVersion1:
                     vers = @"1";
                     break;
-                case JROmniFocusVersion2:
+                case JROmniFocusVersion2Standard:
                     vers = @"2 Standard";
                     break;
                 default:
@@ -88,7 +88,7 @@ int main(int argc, const char * argv[])
         }
         
         //Quit if not pro
-        if (!of.version == JROmniFocusVersion2) [logger fail:@"You appear to be using OmniFocus 2 Standard. kanban-fetch will only work with OmniFocus 2 Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
+        if (!of.version == JROmniFocusVersion2Standard) [logger fail:@"You appear to be using OmniFocus 2 Standard. kanban-fetch will only work with OmniFocus 2 Pro. If you have just purchased OmniFocus Pro, try restarting OmniFocus.\nSorry for the inconvenience!"];
         
         //Determine path to write to
         [logger debug:@"Setting database path to %@", dbPath];

@@ -1,1 +1,1 @@
-../../../../JROFBridge/Classes/JRProject.h
+../../JROFBridge/Classes/JRProject.h

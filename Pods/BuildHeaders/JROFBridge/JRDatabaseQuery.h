@@ -1,1 +1,1 @@
-../../../../JROFBridge/Classes/JRDatabaseQuery.h
+../../JROFBridge/Classes/JRDatabaseQuery.h

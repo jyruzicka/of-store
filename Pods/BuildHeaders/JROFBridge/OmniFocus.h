@@ -1,1 +1,1 @@
-../../../../JROFBridge/Classes/OmniFocus.h
+../../JROFBridge/Classes/OmniFocus.h
